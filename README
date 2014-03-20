@@ -1,0 +1,102 @@
+DES(hw5) Version 1.0 03/19/2014
+
+********************************
+GENERAL INFORMATION
+********************************
+STRUCTURE:
+--------------------------------
+hw5.c    	 : Handle commands and invoke corresponding functions.
+hw5.h    	 : Include all header files and function declarations.
+tablecheck.c : Deal with tablecheck command.
+crypt.c 	 : Deal with encrypt, decrypt, encrypt3 and decrypt3 command.
+util.c  	 : Provides basic functionalities used by almost all programs.
+makefile	 : Complie the program.
+
+
+RUNING ENVIRONMNET: 
+--------------------------------
+Linux, Unix
+
+
+HOW TO COMPILE:
+--------------------------------
+Makefile is included, simply enters:
+    make hw5(or make)
+an executable named hw4 is created.
+
+
+********************************
+GUIDELINE
+********************************
+THE COMMANDLINE SYNTAX:
+--------------------------------
+    hw5 tablecheck -t=tablefile
+    hw5 encrypt -k=key -t=tablefile [file]
+    hw5 decrypt -k=key -t=tablefile [file]
+    hw5 encrypt3 -k=key3 -t=tablefile [file]
+    hw5 decrypt3 -k=key3 -t=tablefile [file]
+
+
+THE MEANING of THE COMMANDLINES:
+--------------------------------
+tablecheck:  	Check the integrity of tablefile.
+ 
+encrypt	  :  	Encrypts the input using DES driven by tablefile in the ECB mode using key as the encryption key (8-byte long and in hexstring format). If the filesize of the input is not a multiple of 8 bytes, please pad it with zeroes.
+ 
+decrypt	  :  	Decrypts the input using DES driven by tablefile in the ECB mode using key as the encryption key (8-byte long and in hexstring format). If the filesize of the input is not a multiple of 8 bytes, please pad it with zeroes.
+ 
+encrypt3  :  	Encrypts the input using EDE triple DES driven by tablefile in the ECB mode using key3 as the encryption key (24-byte long and in hexstring format). If the filesize of the input is not a multiple of 8 bytes, please pad it with zeroes.
+ 
+decrypt3  :  	Decrypts the input using EDE triple DES driven by tablefile in the ECB mode using key3 as the encryption key (24-byte long and in hexstring format). If the filesize of the input is not a multiple of 8 bytes, please pad it with zeroes.
+
+
+THE OUTPUT FOR THE COMMANDLINES:
+--------------------------------
+tablecheck:  	 The command should produce no output in stdout. All error output must go to stderr.
+ 
+encrypt	  :  	 The output of this command is a binary file where each 8-byte block is a direct DES encryption of the corresponding input 8-byte block.The format of output is as follows:
+
+    (C0,D0)=...
+    (C1,D1)=...
+    k1=...
+    (C2,D2)=...
+    k2=...
+    ...
+    (C16,D16)=...
+    k16=...
+    (L0,R0)=...
+    (L1,R1)=...
+    ...
+    (L16,R16)=...
+    
+The values of the C's, D's, L's, R's, and subkeys should be printed in hexstring format. Please only output the L's and R's values during encryption of the first 8-byte block.
+Using the palindromic (and anti-palidromic) definition, if key is a weak or a semi-weak key, please print an error message and only the subkeys.
+
+decrypt	  :  	 The output of this command is a binary file where each 8-byte block is a direct DES decryption of the corresponding input 8-byte block. If the original (binary) plaintext filesize is not a multiple of 8 bytes, the output of the decrypt command will not be the same as the plaintext file.The format of output is as follows:
+
+    (C0,D0)=...
+    (C1,D1)=...
+    k1=...
+    (C2,D2)=...
+    k2=...
+    ...
+    (C16,D16)=...
+    k16=...
+    (L0,R0)=...
+    (L1,R1)=...
+    ...
+    (L16,R16)=...
+    
+The values of the C's, D's, L's, R's, and subkeys should be printed in hexstring format. Please only output the L's and R's values during decryption of the first 8-byte block.
+Using the palindromic (and anti-palidromic) definition, if key is a weak or a semi-weak key, please print an error message and only the subkeys.
+
+encrypt3  :  	 The output of this command is a binary file where each 8-byte block is a direct 3DES encryption of the corresponding input 8-byte block. If one of the keys in key3 is a weak or a semi-weak key, please just print an error message.
+ 
+decrypt3  :  	 The output of this command is a binary file where each 8-byte block is a direct 3DES decryption of the corresponding input 8-byte block. If the original (binary) plaintext filesize is not a multiple of 8 bytes, the output of the decrypt command will not be the same as the plaintext file. If one of the keys in key3 is a weak or a semi-weak key, please just print an error message. 
+
+
+********************************
+CONTACT IMFORMATION:
+********************************
+Email:	 fengwen@usc.edu
+Website: www-scf.usc.edu/~fengwen 
