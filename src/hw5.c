@@ -59,7 +59,7 @@ void checkCommand(char *argv[], int argc){
 void cryptCommand(char *argv[], int argc, int mode, int func){
 	FILE *ifp = stdin;
 	FILE *tfp = NULL;
-	char *key = NULL;
+	unsigned char *key = NULL;
 	int m = 0;
 
 	if(argc < 4 || argc > 5){
@@ -72,10 +72,10 @@ void cryptCommand(char *argv[], int argc, int mode, int func){
 		}
 		else{
 			if(mode == DES_MONO){
-				key = (char *)malloc(sizeof(char) * 8);	
+				key = (unsigned char *)malloc(sizeof(char) * 8);	
 			}
 			else{
-				key = (char *)malloc(sizeof(char) * 24);
+				key = (unsigned char *)malloc(sizeof(char) * 24);
 			}
 			if((keycheck(argv[2] + 3, key, mode)) == -1){
 				return;
@@ -102,16 +102,16 @@ void cryptCommand(char *argv[], int argc, int mode, int func){
 		
 		switch((m = func + mode)){
 			case DES_MONO + ENCRYPT:
-				encrypt(key, tfp, ifp);
+				crypt(key, ifp, MODE_EN, stdout);
 				break;
 			case DES_MONO + DECRYPT:
-				decrypt(key, tfp, ifp);
+				crypt(key, ifp, MODE_DE, stdout);
 				break;
 			case DES_EDE + ENCRYPT:
-				encryptEDE(key, tfp, ifp);
+				encryptEDE(key, ifp, MODE_EN);
 				break;
 			case DES_EDE + DECRYPT:
-				decryptEDE(key, tfp, ifp);
+				decryptEDE(key, ifp, MODE_DE);
 				break;	
 		}
 	}
@@ -133,7 +133,7 @@ int hexcheck(char c, char *c1){
 	return 1;
 }
 
-int keycheck(char *src, char *key, int mode){
+int keycheck(char *src, unsigned char *key, int mode){
 	int len = 16;
 	int i = 0;
 	char high = 0;

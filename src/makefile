@@ -4,7 +4,7 @@ CFLAGS = -I$(IDIR) -g -Wall
 _DEPS = hw5.h
 DEPS = $(pathsubst %, $(IDIR)/%, $(_DEPS))
 
-OBJ = hw5.o encrypt.o decrypt.o tablecheck.o util.o
+OBJ = hw5.o crypt.o tablecheck.o util.o
 
 hw5: $(OBJ)
 	$(CC) $^ -o $@

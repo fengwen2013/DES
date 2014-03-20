@@ -1,5 +1,15 @@
 #include "hw5.h"
 
+int IP[64];
+int E[48];
+int P[32];
+int S[8][64];
+int V[16];
+int PC1[56];
+int PC2[48];
+
+
+
 char *substr(char *s, int position, int length){
 	char *p = malloc(length + 1);
 	int i = 0;
@@ -60,7 +70,7 @@ int checkP(int T[], int len, int max, FILE *ifp, char *tablename){
 			buffT[num - 1] = i;
 		}
 		else{
-			fprintf(stderr, "Error: Value %d should not more than once! in %s\n", num, tablename);
+			fprintf(stderr, "Error: Value %d should not occur more than once! in %s\n", num, tablename);
 			return -1;
 		}
 		i++;
@@ -80,7 +90,7 @@ int checkP(int T[], int len, int max, FILE *ifp, char *tablename){
 	for(i = 0; i < max; i++){
 		if(buffT[i] == -1){
 			if((i + 1) % 8 != 0 && strcmp(tablename, "PC1") == 0){
-				fprintf(stderr, "Error: %d doesn't occur in %s!\n", i + 1, tablename);
+				fprintf(stderr, "Error: Value %d doesn't occur in %s!\n", i + 1, tablename);
 				return -1;
 			}
 		}
@@ -273,15 +283,7 @@ int checkV(int V[], int len, FILE *ifp){
 }
 
 int tablecheck(FILE *ifp){
-	int IP[64];
-	int E[48];
-	int P[32];
-	int S[8][64];
-	int V[16];
-	int PC1[56];
-	int PC2[48];
-	int i = 0;
-	int j = 0;
+	
 	
 	if(checkP(IP, 64, 64, ifp, "IP") == -1){
 		return -1;
